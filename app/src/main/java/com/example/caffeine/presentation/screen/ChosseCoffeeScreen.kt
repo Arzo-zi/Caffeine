@@ -38,10 +38,13 @@ import com.example.caffeine.ui.theme.deepBlack
 import com.example.caffeine.ui.theme.mediumLightGray
 
 @Composable
-fun ChooseCoffeeScreen(modifier: Modifier = Modifier) {
-    Column (
+fun ChooseCoffeeScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToHomeScreen: () -> Unit
+) {
+    Column(
         modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues())
-    ){
+    ) {
         TopBar(
             imgProfile = painterResource(R.drawable.im_profile),
             modifier = Modifier.padding(16.dp),
@@ -55,7 +58,7 @@ fun ChooseCoffeeScreen(modifier: Modifier = Modifier) {
             text = "Continue",
             icon = painterResource(R.drawable.ic_arrow_right),
             onClick = {
-//              TODO
+                onNavigateToHomeScreen()
             },
             modifier = Modifier
                 .padding(top = 200.dp, bottom = 50.dp)
@@ -87,7 +90,7 @@ private fun ChooseCoffee(modifier: Modifier = Modifier) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         HorizontalPager(
             pagerState,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(horizontal = 95.dp),
         ) { page ->
