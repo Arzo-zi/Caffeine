@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.caffeine.presentation.screen.HomeScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.caffeine.presentation.navigation.CaffeineNavHost
+import com.example.caffeine.presentation.navigation.Screen
 import com.example.caffeine.ui.theme.CaffeineTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,16 +15,20 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CaffeineTheme {
-                HomeScreen()
+                val navController = rememberNavController()
+//                CaffeineNavHost(
+//                    navController = navController,
+//                    startDestination = Route.OnboardingScreen.route
+//                )
+                CaffeineNavHost(
+                    navController = navController,
+                    startDestination = Screen.OnboardingScreen.route
+                )
             }
         }
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CaffeineTheme {
-    }
-}
+//AppContent(
+//                    navController = navController
+//                )
