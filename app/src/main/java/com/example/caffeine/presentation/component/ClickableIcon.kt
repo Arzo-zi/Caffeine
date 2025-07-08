@@ -1,6 +1,8 @@
 package com.example.caffeine.presentation.component
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -17,14 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.caffeine.R
 import com.example.caffeine.ui.theme.Brown60
 import com.example.caffeine.ui.theme.LightSurface
 import com.example.caffeine.ui.theme.DarkSurface
@@ -35,19 +35,28 @@ import com.example.caffeine.ui.theme.orangeBrown
 fun ClickableIcon(
     icon: Any,
     modifier: Modifier = Modifier,
+    sizeColor: Color = LightPrimary60,
+    isSelected: Boolean = true,
     onClick: () -> Unit,
     size: Int = 48,
 ) {
     var isClicked by remember { mutableStateOf(false) }
     val backgroundColor by animateColorAsState(
-        targetValue = if (isClicked) Brown60 else LightSurface
+        targetValue = when (icon) {
+            is String -> if (isSelected) Brown60 else LightSurface
+            else -> LightSurface
+        },
+        animationSpec = tween(
+            durationMillis = 40,
+            easing = FastOutSlowInEasing
+        )
     )
-    val shadowModifier = if (isClicked) {
+    val shadowModifier = if (isSelected) {
         Modifier.shadow(
             elevation = 16.dp,
             shape = CircleShape,
             ambientColor = orangeBrown,
-            clip = false // allows shadow to extend beyond shape
+            clip = false
         )
     } else {
         Modifier
@@ -59,7 +68,7 @@ fun ClickableIcon(
             .size(size.dp)
             .clip(CircleShape)
             .clickable {
-                isClicked = true
+                isClicked = false
                 onClick()
             }
             .background(backgroundColor)
@@ -80,7 +89,7 @@ fun ClickableIcon(
                     text = icon.uppercase(),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = LightPrimary60,
+                    color = sizeColor,
                     style = TextStyle(
                         fontWeight = FontWeight(700),
                         letterSpacing = 0.25.sp
@@ -98,28 +107,4 @@ fun ClickableIcon(
             }
         }
     }
-//    Box(
-//        contentAlignment = Alignment.Center,
-//        modifier = modifier
-//            .size(size.dp)
-//            .clip(CircleShape)
-//            .clickable { onClick() }
-//            .background(color = LightSurface)
-//    ) {
-//        Icon(
-//            painter = icon,
-//            contentDescription = null,
-//            modifier = Modifier.size(24.dp),
-//            tint = DarkSurface
-//        )
-//    }
-}
-
-@Preview
-@Composable
-private fun ClickableIconPreview() {
-    ClickableIcon(
-        icon = painterResource(id = R.drawable.ic_add),
-        onClick = {}
-    )
 }

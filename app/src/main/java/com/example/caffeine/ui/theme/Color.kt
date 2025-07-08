@@ -21,3 +21,4 @@ val LightGray80 = Color(0xFFF5F5F5)
 val LightPrimary60 = Color(0x991F1F1F)
 val Brown60 = Color(0xFF7C351B)
 val orangeBrown = Color(0xB94B2380)
+val whiteColor = Color.White

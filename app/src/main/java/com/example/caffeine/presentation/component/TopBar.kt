@@ -43,7 +43,7 @@ fun TopBar(
                 modifier = Modifier.size(48.dp)
             )
         }
-        ClickableIcon(
+        PainterIconButton(
             icon = icon,
             onClick = {
 
