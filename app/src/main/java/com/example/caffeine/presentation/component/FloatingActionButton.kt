@@ -69,7 +69,6 @@ fun FloatingActionButton(
                 tint = IconPrimary,
                 modifier = Modifier
                     .size(24.dp)
-                    .background(color = IconPrimary)
             )
         }
     }
