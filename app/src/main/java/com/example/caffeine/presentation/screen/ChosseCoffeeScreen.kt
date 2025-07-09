@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -47,7 +48,9 @@ fun ChooseCoffeeScreen(
     val coffeeTypes = remember { listOf("Black", "Latte", "Macchiato", "Espresso") }
 
     Column(
-        modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues())
+        modifier = Modifier
+            .padding(WindowInsets.statusBars.asPaddingValues())
+            .padding(bottom = 120.dp) // Leave space for FAB
     ) {
         TopBar(
             imgProfile = painterResource(R.drawable.im_profile),
@@ -56,20 +59,25 @@ fun ChooseCoffeeScreen(
 
         WelcomeTitle(modifier.padding(bottom = 56.dp))
 
-        ChooseCoffee(pagerState = pagerState, coffeeTypes= coffeeTypes)
-
-        FloatingActionButton(
-            text = "Continue",
-            icon = painterResource(R.drawable.ic_arrow_right),
-            onClick = {
-                val selectedCoffee = coffeeTypes[pagerState.currentPage]
-                onNavigateToHomeScreen(selectedCoffee)
-            },
-            modifier = Modifier
-                .padding(top = 200.dp, bottom = 50.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+        ChooseCoffee(pagerState = pagerState, coffeeTypes = coffeeTypes)
     }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 730.dp)
+    ) {
+    FloatingActionButton(
+        text = "Continue",
+        icon = painterResource(R.drawable.ic_arrow_right),
+        onClick = {
+            val selectedCoffee = coffeeTypes[pagerState.currentPage]
+            onNavigateToHomeScreen(selectedCoffee)
+        },
+        modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .padding(bottom = 50.dp)
+    )
+}
 }
 
 @Composable

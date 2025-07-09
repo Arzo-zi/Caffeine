@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -45,7 +46,7 @@ import com.example.caffeine.ui.theme.LightPrimary60
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onNavigateToLoadingScreen: ()-> Unit,
+    onNavigateToLoadingScreen: () -> Unit,
     topBarTitle: String,
 ) {
     var selectedCupSize by remember { mutableStateOf("M") }
@@ -92,7 +93,7 @@ fun HomeScreen(
                 enter = slideInVertically(
                     initialOffsetY = { -900 },
                     animationSpec = tween(800, easing = FastOutSlowInEasing)
-                ) ,
+                ),
                 exit = slideOutVertically(
                     targetOffsetY = { -900 },
                     animationSpec = tween(800, easing = FastOutSlowInEasing)
@@ -143,43 +144,60 @@ fun HomeScreen(
                     )
             }
         }
+    }
 
-        CupSize(
-            modifier = Modifier.padding(bottom = 16.dp),
-            onSizeSelected = { selectedCupSize = it }
-        )
-
-        CoffeeSize(
-            onSizeSelected = { coffeeDropTrigger = !coffeeDropTrigger }
-        )
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.width(152.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 450.dp, start = 130.dp)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val coffeeSize = listOf("Low", "Medium", "High")
-            coffeeSize.forEach { size ->
-                Text(
-                    text = size,
-                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                    fontSize = 10.sp,
-                    color = LightPrimary60,
-                    style = TextStyle(
-                        letterSpacing = 0.25.sp,
+            CupSize(
+                modifier = Modifier.padding(bottom = 16.dp),
+                onSizeSelected = { selectedCupSize = it }
+            )
+
+            CoffeeSize(
+                onSizeSelected = { coffeeDropTrigger = !coffeeDropTrigger }
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.width(152.dp)
+            ) {
+                val coffeeSize = listOf("Low", "Medium", "High")
+                coffeeSize.forEach { size ->
+                    Text(
+                        text = size,
+                        fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                        fontSize = 10.sp,
+                        color = LightPrimary60,
+                        style = TextStyle(
+                            letterSpacing = 0.25.sp,
+                        )
                     )
-                )
+                }
             }
         }
+    }
 
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 638.dp)
+    ) {
         FloatingActionButton(
             text = "Continue",
             icon = painterResource(R.drawable.ic_arrow_right),
             onClick = { onNavigateToLoadingScreen() },
             modifier = Modifier
                 .padding(top = 92.dp, bottom = 50.dp)
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.BottomCenter)
         )
-
     }
+
 }
