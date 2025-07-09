@@ -46,7 +46,7 @@ import com.example.caffeine.ui.theme.LightPrimary60
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateToLoadingScreen: ()-> Unit,
-    topBarTitle: String = "Home",
+    topBarTitle: String,
 ) {
     var selectedCupSize by remember { mutableStateOf("M") }
     var coffeeDropTrigger by remember { mutableStateOf(false) }
@@ -180,7 +180,6 @@ fun HomeScreen(
                 .padding(top = 92.dp, bottom = 50.dp)
                 .align(Alignment.CenterHorizontally)
         )
-
 
     }
 }

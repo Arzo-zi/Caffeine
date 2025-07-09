@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,8 +41,11 @@ import com.example.caffeine.ui.theme.mediumLightGray
 @Composable
 fun ChooseCoffeeScreen(
     modifier: Modifier = Modifier,
-    onNavigateToHomeScreen: () -> Unit
+    onNavigateToHomeScreen: (String) -> Unit
 ) {
+    val pagerState = rememberPagerState { 4 }
+    val coffeeTypes = remember { listOf("Black", "Latte", "Macchiato", "Espresso") }
+
     Column(
         modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues())
     ) {
@@ -52,13 +56,14 @@ fun ChooseCoffeeScreen(
 
         WelcomeTitle(modifier.padding(bottom = 56.dp))
 
-        ChooseCoffee()
+        ChooseCoffee(pagerState = pagerState, coffeeTypes= coffeeTypes)
 
         FloatingActionButton(
             text = "Continue",
             icon = painterResource(R.drawable.ic_arrow_right),
             onClick = {
-                onNavigateToHomeScreen()
+                val selectedCoffee = coffeeTypes[pagerState.currentPage]
+                onNavigateToHomeScreen(selectedCoffee)
             },
             modifier = Modifier
                 .padding(top = 200.dp, bottom = 50.dp)
@@ -68,8 +73,11 @@ fun ChooseCoffeeScreen(
 }
 
 @Composable
-private fun ChooseCoffee(modifier: Modifier = Modifier) {
-    val pagerState = rememberPagerState { 4 }
+private fun ChooseCoffee(
+    modifier: Modifier = Modifier,
+    pagerState: PagerState,
+    coffeeTypes: List<String>
+) {
     val images = remember {
         listOf(
             R.drawable.img_black,
@@ -78,14 +86,7 @@ private fun ChooseCoffee(modifier: Modifier = Modifier) {
             R.drawable.img_espresso,
         )
     }
-    val coffeeType = remember {
-        listOf(
-            "Black",
-            "Latte",
-            "Macchiato",
-            "Espresso"
-        )
-    }
+
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         HorizontalPager(
@@ -118,7 +119,7 @@ private fun ChooseCoffee(modifier: Modifier = Modifier) {
                 )
 
                 Text(
-                    text = coffeeType[pagerState.currentPage],
+                    text = coffeeTypes[pagerState.currentPage],
                     fontFamily = FontFamily(Font(R.font.urbanist_bold)),
                     fontSize = 32.sp,
                     color = deepBlack,

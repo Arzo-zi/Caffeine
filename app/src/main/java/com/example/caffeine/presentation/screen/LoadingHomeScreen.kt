@@ -101,7 +101,7 @@ fun LoadingHomeScreen(
                 )
             }
             Image(
-                painter = painterResource(R.drawable.ic_coffee),
+                painter = painterResource(R.drawable.im_coffee_cup),
                 contentDescription = "",
                 modifier = Modifier
                     .height(animatedHeight)
@@ -144,7 +144,6 @@ fun LoadingHomeScreen(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .size(height = 105.dp, width = 202.dp)
-//                .padding(top = 100.dp)
         )
 
     }

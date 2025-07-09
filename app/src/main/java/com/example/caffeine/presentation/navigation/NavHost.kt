@@ -32,13 +32,18 @@ fun CaffeineNavHost(
             }
             composable(Screen.ChooseCoffeeScreen.route) {
                 ChooseCoffeeScreen(
-                    onNavigateToHomeScreen = {
-                        navController.navigate(Screen.HomeScreen.route)
+                    onNavigateToHomeScreen = { selectedCoffeeType->
+                        navController.navigate(Screen.HomeScreen.route){
+                            navController.previousBackStackEntry?.savedStateHandle?.set("topBarTitle",selectedCoffeeType)
+
+                        }
                     }
                 )
             }
-            composable(Screen.HomeScreen.route) {
+            composable(Screen.HomeScreen.route) { navBackStackEntry->
+                val coffeeTypes = navBackStackEntry.savedStateHandle.get<String>("topBarTitle") ?: "home"
                 HomeScreen(
+                    topBarTitle =coffeeTypes ,
                     onNavigateToLoadingScreen = {
                         navController.navigate(Screen.LoadingHomeScreen.route)
                     }
@@ -50,105 +55,3 @@ fun CaffeineNavHost(
         }
     }
 }
-
-//@Composable
-//fun CaffeineNavHost(
-//    navController: NavHostController,
-//    startDestination: Route,
-//    modifier: Modifier = Modifier,
-//) {
-//    CompositionLocalProvider(
-//        LocalNavController provides navController
-//    ) {
-//        NavHost(
-//            modifier = modifier,
-//            startDestination = startDestination.route,
-//            navController = navController
-//        ) {
-//            composable(Route.OnboardingScreen.route) {
-//                OnboardingScreen(
-//                    onNavigationToChooseCoffee = {
-//                        navController.navigate(Route.ChooseCoffeeScreen.route)
-//                    }
-//                )
-//            }
-//
-//            composable(Route.ChooseCoffeeScreen.route) {
-//                ChooseCoffeeScreen(
-//                    onNavigateToHomeScreen = {
-//                        navController.navigate(Route.HomeScreen.route)
-//                    }
-//                )
-//            }
-//
-//            composable(Route.HomeScreen.route) {
-//                HomeScreen(
-//                    onNavigateToLoadingScreen = {
-//                        navController.navigate(Route.LoadingHomeScreen.route)
-//                    }
-//                )
-//            }
-//
-//            composable(Route.LoadingHomeScreen.route) {
-//                LoadingHomeScreen()
-//            }
-//
-////            composable<Route.OnboardingScreen> {
-////                OnboardingScreen(
-////                    onNavigationToChooseCoffee = {
-////                        navController.navigate(
-////                            Route.ChooseCoffeeScreen
-////                        )
-////                    }
-////                )
-////            }
-////
-////            composable<Route.ChooseCoffeeScreen> {
-////                ChooseCoffeeScreen(
-////                    onNavigateToHomeScreen = {
-////                        navController.navigate(
-////                            Route.HomeScreen
-////                        )
-////                    }
-////                )
-////            }
-////
-////            composable<Route.HomeScreen> {
-////                HomeScreen(
-////                    onNavigateToLoadingScreen = {
-////                        navController.navigate(
-////                            Route.LoadingHomeScreen
-////                        )
-////                    }
-////                )
-////            }
-////
-//////            composable<Route.LoadingHomeScreen> {
-//////                LoadingHomeScreen()
-//////            }
-//
-//
-//        }
-//    }
-//}
-//            composable<Route.OnboardingScreen> {
-//                OnboardingScreen()
-//            }
-//
-//            composable<Route.ChooseCoffeeScreen> {
-//                ChooseCoffeeScreen(
-//
-//                )
-
-//composable<Route.HomeScreen> {
-//                HomeScreen(
-//                    onNavigateToLoadingScreen = {
-//                        navController.navigate(Route.LoadingHomeScreen) {
-//                            popUpTo(Route.OnboardingScreen) {
-//                                inclusive = true
-//                            }
-//                        }
-//                    }
-//                )
-//            }
-
